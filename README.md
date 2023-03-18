@@ -34,7 +34,7 @@ pip install ultralytics streamlit
 - Run the app with the following command: `streamlit run app.py`
 - The app should open in a new browser window.
 - The default image with its objects-detected image is displayed on the main page.
-- Select a source. **Currently only image source(more features to follow)**. Upload an image by clicking on the "Browse files" button.
+- Select a source. (Note: **Currently only image source(more features to follow)**). Upload an image by clicking on the "Browse files" button.
 - Use the slider to adjust the confidence threshold for the model.
 - Click the "Detect Objects" button to run the object detection algorithm on the uploaded image with the selected confidence threshold.
 - The resulting image with objects detected will be displayed on the page. Click the "Download Image" button to download the image.("If save image to download" is selected)
