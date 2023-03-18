@@ -57,7 +57,7 @@ with col2:
     if source is None:
         default_detected_image_path = str(settings.DEFAULT_DETECT_IMAGE)
         image = PIL.Image.open(default_detected_image_path)
-        st.image(default_detected_image_path, caption='Uploaded Image',
+        st.image(default_detected_image_path, caption='Detected Image',
                  use_column_width=True)
     else:
         if detect_button:
