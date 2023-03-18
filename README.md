@@ -8,9 +8,13 @@ This is a web application for object detection using YOLOv8 and Streamlit. Users
 
 <img src="https://github.com/CodingMantras/yolov8-streamlit-detection-tracking/blob/master/assets/pic1.png" >
 
-### Page after uploading an image
+### Page after uploading an image and object detection
 
 <img src="https://github.com/CodingMantras/yolov8-streamlit-detection-tracking/blob/master/assets/pic3.png" >
+
+### Segmentation task on image
+
+<img src="https://github.com/CodingMantras/yolov8-streamlit-detection-tracking/blob/master/assets/segmentation.png" >
 
 ## Requirements
 
