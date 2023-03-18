@@ -37,7 +37,7 @@ with st.sidebar:
     st.header("ML Model Config")
     conf = float(st.slider("Select Model Confidence", 25, 100, 40)) / 100
     print(conf)
-    detect_button = st.button('Detect')
+    detect_button = st.button('Detect Objects')
 
 col1, col2 = st.columns(2)
 
