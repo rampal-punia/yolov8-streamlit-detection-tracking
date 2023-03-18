@@ -43,4 +43,4 @@ pip install ultralytics streamlit
 
 This app is based on the YOLOv8(<https://github.com/ultralytics/ultralytics>) object detection algorithm. The app uses the Streamlit(<https://github.com/streamlit/streamlit>) library for the user interface.
 
-### Hit star if you like this repo
+#### Hit star ⭐ if you like this repo!!!
