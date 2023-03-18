@@ -8,7 +8,6 @@ __pycache__/
 
 # Local folder
 local_folder
-images/
 logs/
 weights/
 local_folder/
