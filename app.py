@@ -35,6 +35,8 @@ with st.sidebar:
     save_radio = st.radio("Save image to download", ["Yes", "No"])
 
     st.header("ML Model Config")
+    mlmodel_radio = st.radio(
+        "Select Task", ['Detection', 'Segmentation'])
     conf = float(st.slider("Select Model Confidence", 25, 100, 40)) / 100
     print(conf)
     detect_button = st.button('Detect Objects')
@@ -61,9 +63,12 @@ with col2:
                  use_column_width=True)
     else:
         if detect_button:
+            if mlmodel_radio == 'Detection':
+                model_path = Path(settings.DETECTION_MODEL)
+            elif mlmodel_radio == 'Segmentation':
+                model_path = Path(settings.SEGMENTATION_MODEL)
             save = True if save_radio == 'Yes' else False
-            model_path = Path(
-                '/home/ram/yolov8-streamlit-detection-tracking/weights/yolov8n.pt')
+
             model = load_model(model_path)
             with torch.no_grad():
                 res = model.predict(
