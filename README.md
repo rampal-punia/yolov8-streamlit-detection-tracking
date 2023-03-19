@@ -95,6 +95,8 @@ VIDEOS_DICT = {
 - Copy paste the url inside the text box.
 - The detection/segmentation task will start on the YouTube video url
 
+[![Watch the video](https://github.com/CodingMantras/yolov8-streamlit-detection-tracking/blob/master/assets/ObjDetectionYouTubeURL.m4v)]
+
 ## Acknowledgements
 
 This app is based on the YOLOv8(<https://github.com/ultralytics/ultralytics>) object detection algorithm. The app uses the Streamlit(<https://github.com/streamlit/streamlit>) library for the user interface.
