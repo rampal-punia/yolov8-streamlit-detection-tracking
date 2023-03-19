@@ -95,7 +95,7 @@ VIDEOS_DICT = {
 - Copy paste the url inside the text box.
 - The detection/segmentation task will start on the YouTube video url
 
-[![Watch the video](https://github.com/CodingMantras/yolov8-streamlit-detection-tracking/blob/master/assets/Objdetectionyoutubegif-1.m4v)]
+<https://user-images.githubusercontent.com/104087274/226178296-684ad72a-fe5f-4589-b668-95c835cd8d8a.mov>
 
 ## Acknowledgements
 
