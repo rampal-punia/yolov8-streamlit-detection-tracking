@@ -94,7 +94,7 @@ VIDEOS_DICT = {
 - Select the source as YouTube
 - Copy paste the url inside the text box.
 - The detection/segmentation task will start on the YouTube video url
-https://user-images.githubusercontent.com/104087274/226178296-684ad72a-fe5f-4589-b668-95c835cd8d8a.mov
+<https://user-images.githubusercontent.com/104087274/226178296-684ad72a-fe5f-4589-b668-95c835cd8d8a.mov>
 
 ## Acknowledgements
 
