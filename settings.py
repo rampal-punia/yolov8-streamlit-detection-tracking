@@ -14,6 +14,15 @@ if root_path not in sys.path:
 # Get the relative path of the root directory with respect to the current working directory
 ROOT = root_path.relative_to(Path.cwd())
 
+# Source
+IMAGE = 'Image'
+VIDEO = 'Video'
+WEBCAM = 'Webcam'
+RTSP = 'RTSP'
+YOUTUBE = 'YouTube'
+
+SOURCES_LIST = [IMAGE, VIDEO, WEBCAM, RTSP, YOUTUBE]
+
 # images
 IMAGES_DIR = ROOT / 'images'
 DEFAULT_IMAGE = IMAGES_DIR / 'office_4.jpg'
@@ -36,3 +45,12 @@ VIDEOS_DICT = {
 MODEL_DIR = ROOT / 'weights'
 DETECTION_MODEL = MODEL_DIR / 'yolov8n.pt'
 SEGMENTATION_MODEL = MODEL_DIR / 'yolov8n-seg.pt'
+
+
+# Detected/segmented image dirpath locator
+DETECT_LOCATOR = 'detect'
+SEGMENT_LOCATOR = 'segment'
+
+
+# Webcam
+WEBCAM_PATH = 0
