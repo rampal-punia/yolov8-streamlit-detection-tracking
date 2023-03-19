@@ -37,9 +37,20 @@ pip install ultralytics streamlit
 
 - Run the app with the following command: `streamlit run app.py`
 - The app should open in a new browser window.
+
+### ML Model Config
+
+- Select task (Detection, Segmentation)
+- Select model confidence
+- Use the slider to adjust the confidence threshold (25-100) for the model.
+
+One the model config is done, select a source.
+
+### Detection on images
+
 - The default image with its objects-detected image is displayed on the main page.
-- Select a source. (Note: **Currently only image source(more features to follow)**). Upload an image by clicking on the "Browse files" button.
-- Use the slider to adjust the confidence threshold for the model.
+- Select a source. (radio button selection `Image`).
+- Upload an image by clicking on the "Browse files" button.
 - Click the "Detect Objects" button to run the object detection algorithm on the uploaded image with the selected confidence threshold.
 - The resulting image with objects detected will be displayed on the page. Click the "Download Image" button to download the image.("If save image to download" is selected)
 
@@ -70,6 +81,19 @@ VIDEOS_DICT = {
 
 # Your videos will start appearing inside streamlit webapp 'Choose a video'.
 ```
+
+- Click on `Detect Video Objects` button and the selected task (detection/segmentation) will start on the selected video.
+
+### Detection on RTSP
+
+- Select the RTSP stream button
+- Enter the rtsp url inside the textbox and hit `Detect Objects` button
+
+### Detection on YouTube Video URL
+
+- Select the source as YouTube
+- Copy paste the url inside the text box.
+- The detection/segmentation task will start on the YouTube video url
 
 ## Acknowledgements
 
