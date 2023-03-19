@@ -13,6 +13,8 @@ weights/
 local_folder/
 /demo.py
 demo.py
+videos/
+runs/
 
 
 # Distribution / packaging
