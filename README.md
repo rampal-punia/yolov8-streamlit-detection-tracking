@@ -1,4 +1,4 @@
-# YOLOv8 Object Detection App using Streamlit
+# Image And Video Object Detection Using YOLOv8 & Streamlit
 
 This is a web application for object detection using YOLOv8 and Streamlit. Users can upload an image, select a confidence threshold for the model, and download the resulting image with objects detected.
 
