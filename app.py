@@ -74,8 +74,12 @@ if source_radio == settings.IMAGE:
         else:
             if st.sidebar.button('Detect Objects'):
                 with torch.no_grad():
-                    res = model.predict(
-                        image, save=save, save_txt=save, exist_ok=True, conf=confidence)
+                    res = model.predict(image,
+                                        save=save,
+                                        save_txt=save,
+                                        exist_ok=True,
+                                        conf=confidence
+                                        )
                     boxes = res[0].boxes
                     res_plotted = res[0].plot()[:, :, ::-1]
                     st.image(res_plotted, caption='Detected Image',

@@ -68,8 +68,8 @@ def draw_boxes(img, bbox, identities=None, categories=None,
         else:
             (w, h), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.6, 1)
             cv2.rectangle(img, (x1, y1), (x2, y2), (255, 191, 0), 2)
-            cv2.rectangle(img, (x1, y1 - 20), (x1 + w, y1), (255, 191, 0), -1)
-            cv2.putText(img, label, (x1, y1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.6,
+            cv2.rectangle(img, (x1, y1 - h), (x1 + w, y1), (255, 191, 0), -1)
+            cv2.putText(img, label, (x1, y1 - h), cv2.FONT_HERSHEY_SIMPLEX, 0.6,
                         [255, 255, 255], 1)
             cv2.circle(img, data, 3, (255, 191, 0), -1)
     return img
@@ -86,30 +86,31 @@ def _display_detected_trackes(dets, img, color_box=None):
 
     # NOTE: We send in detected object class too
     for x1, y1, x2, y2, conf, detclass in dets.cpu().detach().numpy():
+        # for x1, y1, x2, y2, conf, detclass in dets.cpu().detach().numpy():
         dets_to_sort = np.vstack((dets_to_sort,
                                   np.array([x1, y1, x2, y2,
                                             conf, detclass])))
 
     # Run SORT
     tracked_dets = sort_tracker.update(dets_to_sort)
-    tracks = sort_tracker.getTrackers()
+    # tracks = sort_tracker.getTrackers()
 
     # loop over tracks
-    for track in tracks:
-        if color_box:
-            color = compute_color_for_labels(track_color_id)
-            [cv2.line(img, (int(track.centroidarr[i][0]), int(track.centroidarr[i][1])),
-                      (int(track.centroidarr[i+1][0]),
-                       int(track.centroidarr[i+1][1])),
-                      color, thickness=3) for i, _ in enumerate(track.centroidarr)
-                if i < len(track.centroidarr)-1]
-            track_color_id = track_color_id+1
-        else:
-            [cv2.line(img, (int(track.centroidarr[i][0]), int(track.centroidarr[i][1])),
-                      (int(track.centroidarr[i+1][0]),
-                       int(track.centroidarr[i+1][1])),
-                      (124, 252, 0), thickness=3) for i, _ in enumerate(track.centroidarr)
-                if i < len(track.centroidarr)-1]
+    # for track in tracks:
+    #     if color_box:
+    #         color = compute_color_for_labels(track_color_id)
+    #         [cv2.line(img, (int(track.centroidarr[i][0]), int(track.centroidarr[i][1])),
+    #                   (int(track.centroidarr[i+1][0]),
+    #                    int(track.centroidarr[i+1][1])),
+    #                   color, thickness=3) for i, _ in enumerate(track.centroidarr)
+    #             if i < len(track.centroidarr)-1]
+    #         track_color_id = track_color_id+1
+    #     else:
+    #         [cv2.line(img, (int(track.centroidarr[i][0]), int(track.centroidarr[i][1])),
+    #                   (int(track.centroidarr[i+1][0]),
+    #                    int(track.centroidarr[i+1][1])),
+    #                   (124, 252, 0), thickness=3) for i, _ in enumerate(track.centroidarr)
+    #             if i < len(track.centroidarr)-1]
 
     # draw boxes for visualization
     if len(tracked_dets) > 0:
@@ -124,8 +125,9 @@ def _display_detected_trackes(dets, img, color_box=None):
 def _display_detected_frames(conf, model, stframe, image, is_display_tracking=None):
     image = cv2.resize(image, (720, int(720*(9/16))))
     res = model.predict(image, conf=conf)
+    result_tensor = res[0].boxes
     if is_display_tracking:
-        _display_detected_trackes(dets)
+        _display_detected_trackes(result_tensor.data, image)
     res_plotted = res[0].plot()
     # st.write(dir(res))
     stframe.image(res_plotted,
