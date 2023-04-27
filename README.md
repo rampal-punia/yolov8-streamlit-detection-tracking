@@ -6,9 +6,7 @@ This is a web application for object detection using YOLOv8 and Streamlit. Users
 
 
 
-
-
-https://user-images.githubusercontent.com/104087274/234870890-b81cfb07-9370-4885-980f-54986103393b.mov
+https://user-images.githubusercontent.com/104087274/234873080-7a37f848-2fe8-48d5-8bc7-8dff9f99f306.mov
 
 
 
