@@ -1,6 +1,6 @@
-# Image And Video Object Detection Using YOLOv8 & Streamlit
+# Real-time Object Detection and Tracking with YOLOv8 and Streamlit
 
-This is a web application for object detection using YOLOv8 and Streamlit. Users can upload an image, select a confidence threshold for the model, and download the resulting image with objects detected.
+This repository is a comprehensive open-source project that demonstrates the integration of object detection and tracking using the YOLOv8 object detection algorithm and Streamlit, a popular Python web application framework for building interactive web applications. This project provides a user-friendly and customizable interface that can detect and track objects in real-time video streams.
 
 ## Tracking With Object Detection Demo
 
