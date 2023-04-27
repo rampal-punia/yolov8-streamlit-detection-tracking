@@ -143,12 +143,15 @@ def play_youtube_video(conf, model):
         try:
             video = pafy.new(source_youtube)
             best = video.getbest(preftype="mp4")
-            cap = cv2.VideoCapture(best.url)
+            vid_cap = cv2.VideoCapture(best.url)
             stframe = st.empty()
-            while (cap.isOpened()):
-                success, image = cap.read()
+            while (vid_cap.isOpened()):
+                success, image = vid_cap.read()
                 if success:
                     _display_detected_frames(conf, model, stframe, image)
+                else:
+                    vid_cap.release()
+                    break
         except Exception as e:
             st.sidebar.error("Error loading video: " + str(e))
 
@@ -163,6 +166,9 @@ def play_rtsp_stream(conf, model):
                 success, image = vid_cap.read()
                 if success:
                     _display_detected_frames(conf, model, stframe, image)
+                else:
+                    vid_cap.release()
+                    break
         except Exception as e:
             st.sidebar.error("Error loading RTSP stream: " + str(e))
 
@@ -177,30 +183,54 @@ def play_webcam(conf, model):
                 success, image = vid_cap.read()
                 if success:
                     _display_detected_frames(conf, model, stframe, image)
+                else:
+                    vid_cap.release()
+                    break
         except Exception as e:
-            st.sidebar.error("Error loading webcam: " + str(e))
+            st.sidebar.error("Error loading video: " + str(e))
 
 
 def play_stored_video(conf, model):
+    """
+    Plays a stored video file. Tracks and detects objects in real-time using the YOLOv8 object detection model.
+
+    Args:
+        conf: Confidence of YOLOv8 model.
+        model: An instance of the `YOLOv8` class containing the YOLOv8 model.
+
+    Returns:
+        None
+
+    Raises:
+        None
+    """
     source_vid = st.sidebar.selectbox(
         "Choose a video...", settings.VIDEOS_DICT.keys())
 
     display_tracker = st.radio("Display Tracker", ('Yes', 'No'))
     is_display_tracker = True if display_tracker == 'Yes' else False
 
-    video_file = open(settings.VIDEOS_DICT.get(source_vid), 'rb')
-    video_bytes = video_file.read()
-    st.video(video_bytes)
+    with open(settings.VIDEOS_DICT.get(source_vid), 'rb') as video_file:
+        video_bytes = video_file.read()
+    if video_bytes:
+        st.video(video_bytes)
 
     if st.sidebar.button('Detect Video Objects'):
-        # try:
-        vid_cap = cv2.VideoCapture(
-            str(settings.VIDEOS_DICT.get(source_vid)))
-        stframe = st.empty()
-        while (vid_cap.isOpened()):
-            success, image = vid_cap.read()
-            if success:
-                _display_detected_frames(
-                    conf, model, stframe, image, is_display_tracker)
-        # except Exception as e:
-        #     st.sidebar.error("Error loading video: " + str(e))
+        try:
+            vid_cap = cv2.VideoCapture(
+                str(settings.VIDEOS_DICT.get(source_vid)))
+            stframe = st.empty()
+            while (vid_cap.isOpened()):
+                success, image = vid_cap.read()
+                if success:
+                    _display_detected_frames(conf,
+                                             model,
+                                             stframe,
+                                             image,
+                                             is_display_tracker
+                                             )
+                else:
+                    vid_cap.release()
+                    break
+        except Exception as e:
+            st.sidebar.error("Error loading video: " + str(e))
