@@ -4,7 +4,11 @@ This is a web application for object detection using YOLOv8 and Streamlit. Users
 
 ## Tracking With Object Detection Demo
 
-<https://user-images.githubusercontent.com/104087274/234873080-7a37f848-2fe8-48d5-8bc7-8dff9f99f306.mov>
+
+
+https://user-images.githubusercontent.com/104087274/234874398-75248e8c-6965-4c91-9176-622509f0ad86.mov
+
+
 
 ## Demo Pics
 
