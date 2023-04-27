@@ -8,7 +8,7 @@ from sort import Sort
 import settings
 
 # SORT tracking algorithm initialization
-sort_max_age = 5
+sort_max_age = 50
 sort_min_hits = 2
 sort_iou_thresh = 0.2
 sort_tracker = Sort(max_age=sort_max_age,
@@ -68,8 +68,11 @@ def draw_boxes(img, bbox, identities=None, categories=None,
         else:
             (w, h), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.6, 1)
             cv2.rectangle(img, (x1, y1), (x2, y2), (255, 191, 0), 2)
-            cv2.rectangle(img, (x1, y1 - h), (x1 + w, y1), (255, 191, 0), -1)
-            cv2.putText(img, label, (x1, y1 - h), cv2.FONT_HERSHEY_SIMPLEX, 0.6,
+            # cv2.rectangle(img, (x1, y1 - 20), (x1 + w, y1), (255, 191, 0), -1)
+            # cv2.putText(img, label, (x1, y1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.6,
+            #             [255, 255, 255], 1)
+            cv2.rectangle(img, (x1, y1 - 3*h), (x1 + w, y1), (255, 191, 0), -1)
+            cv2.putText(img, label, (x1, y1 - 2*h), cv2.FONT_HERSHEY_SIMPLEX, 0.6,
                         [255, 255, 255], 1)
             cv2.circle(img, data, 3, (255, 191, 0), -1)
     return img

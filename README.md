@@ -2,6 +2,8 @@
 
 This is a web application for object detection using YOLOv8 and Streamlit. Users can upload an image, select a confidence threshold for the model, and download the resulting image with objects detected.
 
+## Tracking With Object Detection Demo
+
 ## Demo Pics
 
 ### Home page
