@@ -7,22 +7,16 @@ import settings
 import tracker
 
 
-def _display_detected_frames(conf, model, st_frame, image, is_display_tracking=None):
-    image = cv2.resize(image, (720, int(720*(9/16))))
-    res = model.predict(image, conf=conf)
-    result_tensor = res[0].boxes
-    if is_display_tracking:
-        tracker._display_detected_tracks(result_tensor.data, image)
-    res_plotted = res[0].plot()
-    # st.write(dir(res))
-    st_frame.image(res_plotted,
-                   caption='Detected Video',
-                   channels="BGR",
-                   use_column_width=True
-                   )
-
-
 def load_model(model_path):
+    """
+    Loads a YOLO object detection model from the specified model_path.
+
+    Parameters:
+        model_path (str): The path to the YOLO model file.
+
+    Returns:
+        A YOLO object detection model.
+    """
     model = YOLO(model_path)
     return model
 
@@ -33,11 +27,28 @@ def display_tracker_option():
     return is_display_tracker
 
 
+def _display_detected_frames(conf, model, st_frame, image, is_display_tracking=None):
+    image = cv2.resize(image, (720, int(720*(9/16))))
+    res = model.predict(image, conf=conf)
+    result_tensor = res[0].boxes
+    if is_display_tracking:
+        tracker._display_detected_tracks(result_tensor.data, image)
+
+    # Plot after drawing the tracking
+    res_plotted = res[0].plot()
+    # st.write(dir(res))
+    st_frame.image(res_plotted,
+                   caption='Detected Video',
+                   channels="BGR",
+                   use_column_width=True
+                   )
+
+
 def play_youtube_video(conf, model):
     """
     Plays a webcam stream. Detects Objects in real-time using the YOLOv8 object detection model.
 
-    Args:
+    Parameters:
         conf: Confidence of YOLOv8 model.
         model: An instance of the `YOLOv8` class containing the YOLOv8 model.
 
@@ -77,7 +88,7 @@ def play_rtsp_stream(conf, model):
     """
     Plays an rtsp stream. Detects Objects in real-time using the YOLOv8 object detection model.
 
-    Args:
+    Parameters:
         conf: Confidence of YOLOv8 model.
         model: An instance of the `YOLOv8` class containing the YOLOv8 model.
 
@@ -113,7 +124,7 @@ def play_webcam(conf, model):
     """
     Plays a webcam stream. Detects Objects in real-time using the YOLOv8 object detection model.
 
-    Args:
+    Parameters:
         conf: Confidence of YOLOv8 model.
         model: An instance of the `YOLOv8` class containing the YOLOv8 model.
 
@@ -149,7 +160,7 @@ def play_stored_video(conf, model):
     """
     Plays a stored video file. Tracks and detects objects in real-time using the YOLOv8 object detection model.
 
-    Args:
+    Parameters:
         conf: Confidence of YOLOv8 model.
         model: An instance of the `YOLOv8` class containing the YOLOv8 model.
 

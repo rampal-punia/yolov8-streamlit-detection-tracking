@@ -16,6 +16,7 @@ st.title("Object Detection using YOLOv8")
 
 st.sidebar.header("ML Model Config")
 
+# Model Options
 model_type = st.sidebar.radio(
     "Select Task", ['Detection', 'Segmentation'])
 
