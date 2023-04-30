@@ -4,7 +4,6 @@ import PIL
 
 # External packages
 import streamlit as st
-import torch
 
 # Local Modules
 import settings
@@ -24,10 +23,8 @@ confidence = float(st.sidebar.slider(
     "Select Model Confidence", 25, 100, 40)) / 100
 
 if model_type == 'Detection':
-    dirpath_locator = settings.DETECT_LOCATOR
     model_path = Path(settings.DETECTION_MODEL)
 elif model_type == 'Segmentation':
-    dirpath_locator = settings.SEGMENT_LOCATOR
     model_path = Path(settings.SEGMENTATION_MODEL)
 
 try:
@@ -46,20 +43,17 @@ if source_radio == settings.IMAGE:
     source_img = st.sidebar.file_uploader(
         "Choose an image...", type=("jpg", "jpeg", "png", 'bmp', 'webp'))
 
-    save_radio = st.sidebar.radio("Save image to download", ["Yes", "No"])
-    save = True if save_radio == 'Yes' else False
-
     col1, col2 = st.columns(2)
 
     with col1:
         try:
             if source_img is None:
                 default_image_path = str(settings.DEFAULT_IMAGE)
-                image = PIL.Image.open(default_image_path)
+                default_image = PIL.Image.open(default_image_path)
                 st.image(default_image_path, caption="Default Image",
                          use_column_width=True)
             else:
-                image = PIL.Image.open(source_img)
+                uploaded_image = PIL.Image.open(source_img)
                 st.image(source_img, caption="Uploaded Image",
                          use_column_width=True)
         except Exception as ex:
@@ -69,29 +63,19 @@ if source_radio == settings.IMAGE:
     with col2:
         if source_img is None:
             default_detected_image_path = str(settings.DEFAULT_DETECT_IMAGE)
-            image = PIL.Image.open(default_detected_image_path)
+            default_detected_image = PIL.Image.open(
+                default_detected_image_path)
             st.image(default_detected_image_path, caption='Detected Image',
                      use_column_width=True)
         else:
             if st.sidebar.button('Detect Objects'):
-                with torch.no_grad():
-                    res = model.predict(image,
-                                        save=save,
-                                        save_txt=save,
-                                        exist_ok=True,
-                                        conf=confidence
-                                        )
-                    boxes = res[0].boxes
-                    res_plotted = res[0].plot()[:, :, ::-1]
-                    st.image(res_plotted, caption='Detected Image',
-                             use_column_width=True)
-                    IMAGE_DOWNLOAD_PATH = f"runs/{dirpath_locator}/predict/image0.jpg"
-                    with open(IMAGE_DOWNLOAD_PATH, 'rb') as fl:
-                        st.download_button("Download object-detected image",
-                                           data=fl,
-                                           file_name="image0.jpg",
-                                           mime='image/jpg'
-                                           )
+                res = model.predict(uploaded_image,
+                                    conf=confidence
+                                    )
+                boxes = res[0].boxes
+                res_plotted = res[0].plot()[:, :, ::-1]
+                st.image(res_plotted, caption='Detected Image',
+                         use_column_width=True)
                 try:
                     with st.expander("Detection Results"):
                         for box in boxes:

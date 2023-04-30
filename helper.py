@@ -2,6 +2,7 @@ from ultralytics import YOLO
 import streamlit as st
 import cv2
 import pafy
+import torch
 
 import settings
 import tracker
@@ -29,13 +30,14 @@ def display_tracker_option():
 
 def _display_detected_frames(conf, model, st_frame, image, is_display_tracking=None):
     image = cv2.resize(image, (720, int(720*(9/16))))
-    res = model.predict(image, conf=conf)
-    result_tensor = res[0].boxes
-    if is_display_tracking:
-        tracker._display_detected_tracks(result_tensor.data, image)
+    with torch.inference_mode():
+        res = model.predict(image, conf=conf)
+        result_tensor = res[0].boxes
+        if is_display_tracking:
+            tracker._display_detected_tracks(result_tensor.data, image)
 
-    # Plot after drawing the tracking
-    res_plotted = res[0].plot()
+        # Plot after drawing the tracking
+        res_plotted = res[0].plot()
     # st.write(dir(res))
     st_frame.image(res_plotted,
                    caption='Detected Video',

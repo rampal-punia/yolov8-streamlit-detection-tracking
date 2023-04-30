@@ -95,9 +95,11 @@ sentry-sdk==1.17.0
 six==1.16.0
 smmap==5.0.0
 sqlparse==0.4.3
+streamlit==1.22.0
 streamlit-nightly==1.20.1.dev20230316
 supervision==0.3.2
 sympy==1.11.1
+tenacity==8.2.2
 thop==0.1.1.post2209072238
 tifffile==2023.3.21
 toml==0.10.2
@@ -111,7 +113,7 @@ triton==2.0.0
 typing-extensions==4.5.0
 tzdata==2022.7
 tzlocal==4.2
-ultralytics==8.0.54
+ultralytics==8.0.89
 urllib3==1.26.15
 validators==0.20.0
 vine==5.0.0
