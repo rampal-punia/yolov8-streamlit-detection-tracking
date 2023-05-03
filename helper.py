@@ -2,7 +2,6 @@ from ultralytics import YOLO
 import streamlit as st
 import cv2
 import pafy
-import torch
 
 import settings
 import tracker
@@ -29,16 +28,33 @@ def display_tracker_option():
 
 
 def _display_detected_frames(conf, model, st_frame, image, is_display_tracking=None):
-    image = cv2.resize(image, (720, int(720*(9/16))))
-    with torch.inference_mode():
-        res = model.predict(image, conf=conf)
-        result_tensor = res[0].boxes
-        if is_display_tracking:
-            tracker._display_detected_tracks(result_tensor.data, image)
+    """
+    Display the detected objects on a video frame using the YOLOv8 model.
 
-        # Plot after drawing the tracking
-        res_plotted = res[0].plot()
-    # st.write(dir(res))
+    Args:
+    - conf (float): Confidence threshold for object detection.
+    - model (YoloV8): A YOLOv8 object detection model.
+    - st_frame (Streamlit object): A Streamlit object to display the detected video.
+    - image (numpy array): A numpy array representing the video frame.
+    - is_display_tracking (bool): A flag indicating whether to display object tracking (default=None).
+
+    Returns:
+    None
+    """
+
+    # Resize the image to a standard size
+    image = cv2.resize(image, (720, int(720*(9/16))))
+
+    # Predict the objects in the image using the YOLOv8 model
+    res = model.predict(image, conf=conf)
+    result_tensor = res[0].boxes
+
+    # Display object tracking, if specified
+    if is_display_tracking:
+        tracker._display_detected_tracks(result_tensor.data, image)
+
+    # # Plot the detected objects on the video frame
+    res_plotted = res[0].plot()
     st_frame.image(res_plotted,
                    caption='Detected Video',
                    channels="BGR",

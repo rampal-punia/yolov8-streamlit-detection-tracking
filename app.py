@@ -9,10 +9,18 @@ import streamlit as st
 import settings
 import helper
 
+# Setting page layout
+st.set_page_config(
+    page_title="Object Detection using YOLOv8",
+    page_icon="🤖",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
-# Sidebar
+# Main page heading
 st.title("Object Detection using YOLOv8")
 
+# Sidebar
 st.sidebar.header("ML Model Config")
 
 # Model Options
@@ -22,22 +30,24 @@ model_type = st.sidebar.radio(
 confidence = float(st.sidebar.slider(
     "Select Model Confidence", 25, 100, 40)) / 100
 
+# Selecting Detection Or Segmentation
 if model_type == 'Detection':
     model_path = Path(settings.DETECTION_MODEL)
 elif model_type == 'Segmentation':
     model_path = Path(settings.SEGMENTATION_MODEL)
 
+# Load Pre-trained ML Model
 try:
     model = helper.load_model(model_path)
 except Exception as ex:
     st.error(f"Unable to load model. Check the specified path: {model_path}")
     st.error(ex)
 
-source_img = None
 st.sidebar.header("Image/Video Config")
 source_radio = st.sidebar.radio(
     "Select Source", settings.SOURCES_LIST)
 
+source_img = None
 # If image is selected
 if source_radio == settings.IMAGE:
     source_img = st.sidebar.file_uploader(
@@ -79,7 +89,7 @@ if source_radio == settings.IMAGE:
                 try:
                     with st.expander("Detection Results"):
                         for box in boxes:
-                            st.write(box.xywh)
+                            st.write(box.data)
                 except Exception as ex:
                     # st.write(ex)
                     st.write("No image is uploaded yet!")

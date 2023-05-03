@@ -8,6 +8,8 @@ __pycache__/
 
 # Local folder
 local_folder
+project_demo
+project_demo/
 logs/
 weights/
 local_folder/
