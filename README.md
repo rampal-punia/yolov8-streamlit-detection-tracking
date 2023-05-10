@@ -27,14 +27,14 @@ YOLOv8
 Streamlit
 
 ```bash
-pip install ultralytics streamlit
+pip install ultralytics streamlit pafy
 ```
 
 ## Installation
 
 - Clone the repository: git clone <https://github.com/CodingMantras/yolov8-streamlit-detection-tracking.git>
 - Change to the repository directory: `cd yolov8-streamlit-detection-tracking`
-- Install the requirements: `pip install -r requirements.txt`
+- Create `weights`, `videos`, and `images` directories inside the project.
 - Download the pre-trained YOLOv8 weights from (<https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n.pt>) and save them to the `weights` directory in the same project.
 
 ## Usage
@@ -104,5 +104,9 @@ VIDEOS_DICT = {
 ## Acknowledgements
 
 This app is based on the YOLOv8(<https://github.com/ultralytics/ultralytics>) object detection algorithm. The app uses the Streamlit(<https://github.com/streamlit/streamlit>) library for the user interface.
+
+### Note
+
+Please note that this project is intended for educational purposes only and should not be used in production environments.
 
 **Hit star ⭐ if you like this repo!!!**
