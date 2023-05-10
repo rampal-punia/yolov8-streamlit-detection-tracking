@@ -105,7 +105,7 @@ VIDEOS_DICT = {
 
 This app is based on the YOLOv8(<https://github.com/ultralytics/ultralytics>) object detection algorithm. The app uses the Streamlit(<https://github.com/streamlit/streamlit>) library for the user interface.
 
-### Note
+### Disclaimer
 
 Please note that this project is intended for educational purposes only and should not be used in production environments.
 
