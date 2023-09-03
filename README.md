@@ -20,15 +20,6 @@ pip install ultralytics streamlit pafy
 pip install pytube
 ```
 
-### image page
-
-<img src="https://user-images.githubusercontent.com/80126067/265277736-240e9460-ea6a-4144-8fa4-adedf9e55db0.png" >
-
-### video page
-
-<img src="https://user-images.githubusercontent.com/80126067/265277734-5e833394-dd3d-4d4e-9e24-d24873d67076.png" >
-
-
 # Running the program :
 - clone repo
 ```bash
@@ -42,3 +33,13 @@ cd yolov8-streamlit-detection-tracking
 ``` 
 streamlit run app.py
 ```
+- We are now inside the image detection page.
+- Now, we can perform detection by uploading the necessary files.
+
+### image page
+
+<img src="https://user-images.githubusercontent.com/80126067/265277736-240e9460-ea6a-4144-8fa4-adedf9e55db0.png" >
+
+### video page
+
+<img src="https://user-images.githubusercontent.com/80126067/265277734-5e833394-dd3d-4d4e-9e24-d24873d67076.png" >
