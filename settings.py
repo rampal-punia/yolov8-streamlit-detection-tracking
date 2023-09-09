@@ -1,6 +1,5 @@
 from pathlib import Path
 import sys
-import helper
 
 # Get the absolute path of the current file
 file_path = Path(__file__).resolve()
