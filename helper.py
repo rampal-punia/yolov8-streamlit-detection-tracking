@@ -2,9 +2,9 @@ from ultralytics import YOLO
 import streamlit as st
 import cv2
 from pytube import YouTube
+
 import settings
-import os
-import io
+
 
 def load_model(model_path):
     """
@@ -21,17 +21,15 @@ def load_model(model_path):
 
 
 def display_tracker_options():
-    IOU_values = float(st.slider(
-        "Select Model IOU", 25, 100, 50)) / 100
     display_tracker = st.radio("Display Tracker", ('Yes', 'No'))
     is_display_tracker = True if display_tracker == 'Yes' else False
     if is_display_tracker:
         tracker_type = st.radio("Tracker", ("bytetrack.yaml", "botsort.yaml"))
-        return is_display_tracker, tracker_type , IOU_values
+        return is_display_tracker, tracker_type
     return is_display_tracker, None
 
 
-def _display_detected_frames(conf, model, st_frame, image, is_display_tracking=None, tracker=None , iou=0.5 ):
+def _display_detected_frames(conf, model, st_frame, image, is_display_tracking=None, tracker=None):
     """
     Display the detected objects on a video frame using the YOLOv8 model.
 
@@ -45,12 +43,13 @@ def _display_detected_frames(conf, model, st_frame, image, is_display_tracking=N
     Returns:
     None
     """
+
     # Resize the image to a standard size
     image = cv2.resize(image, (720, int(720*(9/16))))
 
     # Display object tracking, if specified
     if is_display_tracking:
-        res = model.track(image, conf=conf, persist=True, tracker=tracker ,iou=iou )
+        res = model.track(image, conf=conf, persist=True, tracker=tracker)
     else:
         # Predict the objects in the image using the YOLOv8 model
         res = model.predict(image, conf=conf)
@@ -80,13 +79,14 @@ def play_youtube_video(conf, model):
     """
     source_youtube = st.sidebar.text_input("YouTube Video url")
 
-    is_display_tracker, tracker ,iou = display_tracker_options()
+    is_display_tracker, tracker = display_tracker_options()
 
     if st.sidebar.button('Detect Objects'):
         try:
-            video = pafy.new(source_youtube)
-            best = video.getbest(preftype="mp4")
-            vid_cap = cv2.VideoCapture(best.url)
+            yt = YouTube(source_youtube)
+            stream = yt.streams.filter(file_extension="mp4", res=720).first()
+            vid_cap = cv2.VideoCapture(stream.url)
+
             st_frame = st.empty()
             while (vid_cap.isOpened()):
                 success, image = vid_cap.read()
@@ -96,10 +96,8 @@ def play_youtube_video(conf, model):
                                              st_frame,
                                              image,
                                              is_display_tracker,
-                                             tracker,
-                                             iou
+                                             tracker
                                              )
-
                 else:
                     vid_cap.release()
                     break
@@ -122,7 +120,7 @@ def play_rtsp_stream(conf, model):
         None
     """
     source_rtsp = st.sidebar.text_input("rtsp stream url")
-    is_display_tracker, tracker ,iou = display_tracker_options()
+    is_display_tracker, tracker = display_tracker_options()
     if st.sidebar.button('Detect Objects'):
         try:
             vid_cap = cv2.VideoCapture(source_rtsp)
@@ -135,8 +133,7 @@ def play_rtsp_stream(conf, model):
                                              st_frame,
                                              image,
                                              is_display_tracker,
-                                             tracker ,
-                                             iou
+                                             tracker
                                              )
                 else:
                     vid_cap.release()
@@ -160,7 +157,7 @@ def play_webcam(conf, model):
         None
     """
     source_webcam = settings.WEBCAM_PATH
-    is_display_tracker, tracker ,iou = display_tracker_options()
+    is_display_tracker, tracker = display_tracker_options()
     if st.sidebar.button('Detect Objects'):
         try:
             vid_cap = cv2.VideoCapture(source_webcam)
@@ -174,7 +171,6 @@ def play_webcam(conf, model):
                                              image,
                                              is_display_tracker,
                                              tracker,
-                                             iou
                                              )
                 else:
                     vid_cap.release()
@@ -197,25 +193,20 @@ def play_stored_video(conf, model):
     Raises:
         None
     """
-    uploaded_files = st.file_uploader("Upload video files", key="video_uploader", type=["mp4", "avi", "mov"],
-                                      accept_multiple_files=True)
+    source_vid = st.sidebar.selectbox(
+        "Choose a video...", settings.VIDEOS_DICT.keys())
 
-    try:
-        if uploaded_files is not None:
-            for uploaded_file in uploaded_files:
-                video_name = uploaded_file.name
+    is_display_tracker, tracker = display_tracker_options()
 
-            if video_name is not None:
-                video_path = find_video_path_by_name(str(video_name), uploaded_files)
-    except:
-        st.warning("Please upload a video file available on your computer for inspection or tracking.")
-
-
-    is_display_tracker, tracker , iou = display_tracker_options()
+    with open(settings.VIDEOS_DICT.get(source_vid), 'rb') as video_file:
+        video_bytes = video_file.read()
+    if video_bytes:
+        st.video(video_bytes)
 
     if st.sidebar.button('Detect Video Objects'):
         try:
-            vid_cap = cv2.VideoCapture(video_path)
+            vid_cap = cv2.VideoCapture(
+                str(settings.VIDEOS_DICT.get(source_vid)))
             st_frame = st.empty()
             while (vid_cap.isOpened()):
                 success, image = vid_cap.read()
@@ -225,68 +216,10 @@ def play_stored_video(conf, model):
                                              st_frame,
                                              image,
                                              is_display_tracker,
-                                             tracker ,
-                                             iou
+                                             tracker
                                              )
-
                 else:
                     vid_cap.release()
                     break
         except Exception as e:
             st.sidebar.error("Error loading video: " + str(e))
-
-
-def show_model_not_loaded_warning(model):
-    """
-    Shows a warning message when the model is not loaded.
-
-    Parameters:
-        model: The model to check.
-
-    Returns:
-        None
-    """
-    if model is None:
-        st.warning("The model has not been loaded. Please upload a valid model weight file.")
-
-
-
-def find_video_path_by_name(video_name , uploaded_files):
-    """
-    Searches for a video file by name among the uploaded files and returns its file path.
-
-    Parameters:
-        video_name (str): The name of the video file to search for.
-
-    Returns:
-        str or None: Returns the file path of the found video if it exists, otherwise returns None.
-    """
-
-    if uploaded_files is not None:
-        for uploaded_file in uploaded_files:
-            if uploaded_file.name == video_name:
-                # If the uploaded file matches the desired name, save it to a temporary location
-                temp_location = save_uploaded_file(uploaded_file)
-                if temp_location is not None:
-                    return temp_location
-
-    # If the desired video name was not found among the uploaded files
-    return None
-
-def save_uploaded_file(uploaded_file):
-    try:
-        temp_dir = io.BytesIO()
-        temp_location = os.path.join(os.path.expanduser("~"), "Downloads", uploaded_file.name)
-
-        with open(temp_location, 'wb') as out:
-            out.write(uploaded_file.read())
-
-        return temp_location
-    except Exception as e:
-        st.error(f"Error saving uploaded file: {e}")
-        return None
-
-
-
-
-
