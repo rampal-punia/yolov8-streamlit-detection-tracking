@@ -68,7 +68,6 @@ source_radio = st.radio(
 source_img = None
 # If image is selected
 if source_radio == settings.IMAGE:
-    helper.show_model_not_loaded_warning(model)
     source_img = st.sidebar.file_uploader(
         "Choose an image...", type=("jpg", "jpeg", "png", 'bmp', 'webp'))
 
@@ -108,7 +107,6 @@ if source_radio == settings.IMAGE:
 
 elif source_radio == settings.VIDEO:
     set_background('back_ground_images/background2.jpg')
-    helper.show_model_not_loaded_warning(model)
     helper.play_stored_video(confidence, model)
 
 elif source_radio == settings.WEBCAM:
@@ -121,7 +119,6 @@ elif source_radio == settings.RTSP:
 
 elif source_radio == settings.YOUTUBE:
     set_background('back_ground_images/background5.jpg')
-    helper.show_model_not_loaded_warning(model)
     helper.play_youtube_video(confidence, model)
 
 else:
