@@ -27,7 +27,7 @@ YOLOv8
 Streamlit
 
 ```bash
-pip install ultralytics streamlit pafy
+pip install ultralytics streamlit pytube
 ```
 
 ## Installation
