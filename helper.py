@@ -96,7 +96,7 @@ def play_youtube_video(conf, model):
                                              st_frame,
                                              image,
                                              is_display_tracker,
-                                             tracker
+                                             tracker,
                                              )
                 else:
                     vid_cap.release()
