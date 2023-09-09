@@ -84,10 +84,9 @@ def play_youtube_video(conf, model):
 
     if st.sidebar.button('Detect Objects'):
         try:
-            yt = YouTube(source_youtube)
-            stream = yt.streams.filter(file_extension="mp4", res=720).first()
-            vid_cap = cv2.VideoCapture(stream.url)
-
+            video = pafy.new(source_youtube)
+            best = video.getbest(preftype="mp4")
+            vid_cap = cv2.VideoCapture(best.url)
             st_frame = st.empty()
             while (vid_cap.isOpened()):
                 success, image = vid_cap.read()
