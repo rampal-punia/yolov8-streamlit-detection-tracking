@@ -97,7 +97,6 @@ def play_youtube_video(conf, model):
                                              image,
                                              is_display_tracker,
                                              tracker,
-                                             iou
                                              )
 
                 else:
