@@ -31,7 +31,7 @@ def display_tracker_options():
     return is_display_tracker, None
 
 
-def _display_detected_frames(conf, model, st_frame, image, is_display_tracking=None, tracker=None , ıou=0.5 ):
+def _display_detected_frames(conf, model, st_frame, image, is_display_tracking=None, tracker=None , iou=0.5 ):
     """
     Display the detected objects on a video frame using the YOLOv8 model.
 
@@ -50,7 +50,7 @@ def _display_detected_frames(conf, model, st_frame, image, is_display_tracking=N
 
     # Display object tracking, if specified
     if is_display_tracking:
-        res = model.track(image, conf=conf, persist=True, tracker=tracker ,iou=ıou )
+        res = model.track(image, conf=conf, persist=True, tracker=tracker ,iou=iou )
     else:
         # Predict the objects in the image using the YOLOv8 model
         res = model.predict(image, conf=conf)
@@ -80,7 +80,7 @@ def play_youtube_video(conf, model):
     """
     source_youtube = st.sidebar.text_input("YouTube Video url")
 
-    is_display_tracker, tracker ,ıou = display_tracker_options()
+    is_display_tracker, tracker ,iou = display_tracker_options()
 
     if st.sidebar.button('Detect Objects'):
         try:
@@ -96,8 +96,8 @@ def play_youtube_video(conf, model):
                                              st_frame,
                                              image,
                                              is_display_tracker,
-                                             tracker ,
-                                             ıou
+                                             tracker,
+                                             iou
                                              )
 
                 else:
@@ -122,7 +122,7 @@ def play_rtsp_stream(conf, model):
         None
     """
     source_rtsp = st.sidebar.text_input("rtsp stream url")
-    is_display_tracker, tracker ,ıou = display_tracker_options()
+    is_display_tracker, tracker ,iou = display_tracker_options()
     if st.sidebar.button('Detect Objects'):
         try:
             vid_cap = cv2.VideoCapture(source_rtsp)
@@ -136,7 +136,7 @@ def play_rtsp_stream(conf, model):
                                              image,
                                              is_display_tracker,
                                              tracker ,
-                                             ıou
+                                             iou
                                              )
                 else:
                     vid_cap.release()
@@ -160,7 +160,7 @@ def play_webcam(conf, model):
         None
     """
     source_webcam = settings.WEBCAM_PATH
-    is_display_tracker, tracker ,ıou = display_tracker_options()
+    is_display_tracker, tracker ,iou = display_tracker_options()
     if st.sidebar.button('Detect Objects'):
         try:
             vid_cap = cv2.VideoCapture(source_webcam)
@@ -174,7 +174,7 @@ def play_webcam(conf, model):
                                              image,
                                              is_display_tracker,
                                              tracker,
-                                             ıou
+                                             iou
                                              )
                 else:
                     vid_cap.release()
@@ -211,7 +211,7 @@ def play_stored_video(conf, model):
         st.warning("Please upload a video file available on your computer for inspection or tracking.")
 
 
-    is_display_tracker, tracker , ıou = display_tracker_options()
+    is_display_tracker, tracker , iou = display_tracker_options()
 
     if st.sidebar.button('Detect Video Objects'):
         try:
@@ -226,7 +226,7 @@ def play_stored_video(conf, model):
                                              image,
                                              is_display_tracker,
                                              tracker ,
-                                             ıou
+                                             iou
                                              )
 
                 else:
