@@ -1,4 +1,5 @@
 from ultralytics import YOLO
+import time
 import streamlit as st
 import cv2
 from pytube import YouTube
@@ -120,7 +121,7 @@ def play_rtsp_stream(conf, model):
         None
     """
     source_rtsp = st.sidebar.text_input("rtsp stream url:")
-    st.sidebar.caption('SAMPLE: "rtsp://192.168.10.180:554/mpeg4?username=xxx&password=yyy"')
+    st.sidebar.caption('Example URL: rtsp://admin:12345@192.168.1.210:554/Streaming/Channels/101')
     is_display_tracker, tracker = display_tracker_options()
     if st.sidebar.button('Detect Objects'):
         try:
@@ -137,8 +138,11 @@ def play_rtsp_stream(conf, model):
                                              tracker
                                              )
                 else:
-                    vid_cap = cv2.VideoCapture(source_rtsp)
-                    continue
+                    vid_cap.release()
+                    # vid_cap = cv2.VideoCapture(source_rtsp)
+                    # time.sleep(0.1)
+                    # continue
+                    break
         except Exception as e:
             vid_cap.release()
             st.sidebar.error("Error loading RTSP stream: " + str(e))
