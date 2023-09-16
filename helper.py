@@ -119,7 +119,8 @@ def play_rtsp_stream(conf, model):
     Raises:
         None
     """
-    source_rtsp = st.sidebar.text_input("rtsp stream url")
+    source_rtsp = st.sidebar.text_input("rtsp stream url:")
+    st.sidebar.caption('SAMPLE: "rtsp://192.168.10.180:554/mpeg4?username=xxx&password=yyy"')
     is_display_tracker, tracker = display_tracker_options()
     if st.sidebar.button('Detect Objects'):
         try:
@@ -136,9 +137,10 @@ def play_rtsp_stream(conf, model):
                                              tracker
                                              )
                 else:
-                    vid_cap.release()
-                    break
+                    vid_cap = cv2.VideoCapture(source_rtsp)
+                    continue
         except Exception as e:
+            vid_cap.release()
             st.sidebar.error("Error loading RTSP stream: " + str(e))
 
 
