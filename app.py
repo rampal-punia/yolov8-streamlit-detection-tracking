@@ -18,7 +18,7 @@ st.set_page_config(
 )
 
 # Main page heading
-st.title("Object Detection using YOLOv8")
+st.title("Object Detection And Tracking using YOLOv8")
 
 # Sidebar
 st.sidebar.header("ML Model Config")
