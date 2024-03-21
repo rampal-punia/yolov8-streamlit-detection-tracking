@@ -1,11 +1,12 @@
-# Real-time Object Detection and Tracking with YOLOv8 and Streamlit
+# <span style="color:deepskyblue"> Real-time Object Detection and Tracking with YOLOv8 & Streamlit </span>
 
-This repository is a comprehensive open-source project that demonstrates the integration of object detection and tracking using the YOLOv8 object detection algorithm and Streamlit, a popular Python web application framework for building interactive web applications. This project provides a user-friendly and customizable interface that can detect and track objects in real-time video streams.
+This repository is a comprehensive open-source project that demonstrates the integration of **object detection** and **tracking** using **YOLOv8 (object detection algorithm)** and **Streamlit (a popular Python web application framework for building interactive web applications)**. This project provides a user-friendly as well as a customizable interface that can detect and track objects in real-time video streams like rtsp, udp and youtube urls.
 
-## Demo WebApp
+## <span style="color:deepskyblue">WebApp Demo on Streamlit Server</span>
 
-This app is up and running on Streamlit cloud server!!! Thanks 'Streamlit' for the community support for the cloud upload. You can check the demo of this web application on the link below.
+Thank you team [Streamlit](<https://github.com/streamlit/streamlit>) for the community support for the cloud upload. 
 
+This app is up and running on Streamlit cloud server!!! You can check the demo of this web application on this link 
 [yolov8-streamlit-detection-tracking-webapp](https://codingmantras-yolov8-streamlit-detection-tracking-app-njcqjg.streamlit.app/)
 
 ## Tracking With Object Detection Demo
@@ -109,10 +110,10 @@ VIDEOS_DICT = {
 
 ## Acknowledgements
 
-This app is based on the YOLOv8(<https://github.com/ultralytics/ultralytics>) object detection algorithm. The app uses the Streamlit(<https://github.com/streamlit/streamlit>) library for the user interface.
+This app uses [YOLOv8](<https://github.com/ultralytics/ultralytics>) for object detection algorithm and [Streamlit](<https://github.com/streamlit/streamlit>) library for the user interface.
 
 ### Disclaimer
 
-Please note that this project is intended for educational purposes only and should not be used in production environments.
+Please note this project is intended for educational purposes only and should not be used in production environments.
 
 **Hit star ⭐ if you like this repo!!!**
