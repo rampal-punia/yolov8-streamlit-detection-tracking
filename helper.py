@@ -1,5 +1,4 @@
 from ultralytics import YOLO
-import time
 import streamlit as st
 import cv2
 import yt_dlp
@@ -63,78 +62,58 @@ def _display_detected_frames(conf, model, st_frame, image, is_display_tracking=N
                    )
 
 
+def get_youtube_stream_url(youtube_url):
+    ydl_opts = {
+        'format': 'best[ext=mp4]',
+        'no_warnings': True,
+        'quiet': True
+    }
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        info = ydl.extract_info(youtube_url, download=False)
+        return info['url']
+
+
 def play_youtube_video(conf, model):
     source_youtube = st.sidebar.text_input("YouTube Video url")
     is_display_tracker, tracker = display_tracker_options()
 
     if st.sidebar.button('Detect Objects'):
+        if not source_youtube:
+            st.sidebar.error("Please enter a YouTube URL")
+            return
+
         try:
-            ydl_opts = {
-                'format': 'bestvideo[ext=mp4][height<=720]+bestaudio[ext=m4a]/best[ext=mp4]/best'}
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                info = ydl.extract_info(source_youtube, download=False)
-                st.write(info)
-                url = info['url']
+            st.sidebar.info("Extracting video stream URL...")
+            stream_url = get_youtube_stream_url(source_youtube)
 
-            vid_cap = cv2.VideoCapture(url)
+            st.sidebar.info("Opening video stream...")
+            vid_cap = cv2.VideoCapture(stream_url)
 
+            if not vid_cap.isOpened():
+                st.sidebar.error(
+                    "Failed to open video stream. Please try a different video.")
+                return
+
+            st.sidebar.success("Video stream opened successfully!")
             st_frame = st.empty()
-            while (vid_cap.isOpened()):
+            while vid_cap.isOpened():
                 success, image = vid_cap.read()
                 if success:
-                    _display_detected_frames(conf,
-                                             model,
-                                             st_frame,
-                                             image,
-                                             is_display_tracker,
-                                             tracker,
-                                             )
+                    _display_detected_frames(
+                        conf,
+                        model,
+                        st_frame,
+                        image,
+                        is_display_tracker,
+                        tracker
+                    )
                 else:
-                    vid_cap.release()
                     break
+
+            vid_cap.release()
+
         except Exception as e:
-            st.sidebar.error("Error loading video: " + str(e))
-
-# def play_youtube_video(conf, model):
-#     """
-#     Plays a webcam stream. Detects Objects in real-time using the YOLOv8 object detection model.
-
-#     Parameters:
-#         conf: Confidence of YOLOv8 model.
-#         model: An instance of the `YOLOv8` class containing the YOLOv8 model.
-
-#     Returns:
-#         None
-
-#     Raises:
-#         None
-#     """
-#     source_youtube = st.sidebar.text_input("YouTube Video url")
-
-#     is_display_tracker, tracker = display_tracker_options()
-
-#     if st.sidebar.button('Detect Objects'):
-#         try:
-#             yt = YouTube(source_youtube)
-#             stream = yt.streams.filter(file_extension="mp4", res=720).first()
-#             vid_cap = cv2.VideoCapture(stream.url)
-
-#             st_frame = st.empty()
-#             while (vid_cap.isOpened()):
-#                 success, image = vid_cap.read()
-#                 if success:
-#                     _display_detected_frames(conf,
-#                                              model,
-#                                              st_frame,
-#                                              image,
-#                                              is_display_tracker,
-#                                              tracker,
-#                                              )
-#                 else:
-#                     vid_cap.release()
-#                     break
-#         except Exception as e:
-#             st.sidebar.error("Error loading video: " + str(e))
+            st.sidebar.error(f"An error occurred: {str(e)}")
 
 
 def play_rtsp_stream(conf, model):
