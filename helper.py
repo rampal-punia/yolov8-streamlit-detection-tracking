@@ -2,8 +2,7 @@ from ultralytics import YOLO
 import time
 import streamlit as st
 import cv2
-from pytube import YouTube
-
+import yt_dlp
 import settings
 
 
@@ -65,28 +64,19 @@ def _display_detected_frames(conf, model, st_frame, image, is_display_tracking=N
 
 
 def play_youtube_video(conf, model):
-    """
-    Plays a webcam stream. Detects Objects in real-time using the YOLOv8 object detection model.
-
-    Parameters:
-        conf: Confidence of YOLOv8 model.
-        model: An instance of the `YOLOv8` class containing the YOLOv8 model.
-
-    Returns:
-        None
-
-    Raises:
-        None
-    """
     source_youtube = st.sidebar.text_input("YouTube Video url")
-
     is_display_tracker, tracker = display_tracker_options()
 
     if st.sidebar.button('Detect Objects'):
         try:
-            yt = YouTube(source_youtube)
-            stream = yt.streams.filter(file_extension="mp4", res=720).first()
-            vid_cap = cv2.VideoCapture(stream.url)
+            ydl_opts = {
+                'format': 'bestvideo[ext=mp4][height<=720]+bestaudio[ext=m4a]/best[ext=mp4]/best'}
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(source_youtube, download=False)
+                st.write(info)
+                url = info['url']
+
+            vid_cap = cv2.VideoCapture(url)
 
             st_frame = st.empty()
             while (vid_cap.isOpened()):
@@ -105,6 +95,47 @@ def play_youtube_video(conf, model):
         except Exception as e:
             st.sidebar.error("Error loading video: " + str(e))
 
+# def play_youtube_video(conf, model):
+#     """
+#     Plays a webcam stream. Detects Objects in real-time using the YOLOv8 object detection model.
+
+#     Parameters:
+#         conf: Confidence of YOLOv8 model.
+#         model: An instance of the `YOLOv8` class containing the YOLOv8 model.
+
+#     Returns:
+#         None
+
+#     Raises:
+#         None
+#     """
+#     source_youtube = st.sidebar.text_input("YouTube Video url")
+
+#     is_display_tracker, tracker = display_tracker_options()
+
+#     if st.sidebar.button('Detect Objects'):
+#         try:
+#             yt = YouTube(source_youtube)
+#             stream = yt.streams.filter(file_extension="mp4", res=720).first()
+#             vid_cap = cv2.VideoCapture(stream.url)
+
+#             st_frame = st.empty()
+#             while (vid_cap.isOpened()):
+#                 success, image = vid_cap.read()
+#                 if success:
+#                     _display_detected_frames(conf,
+#                                              model,
+#                                              st_frame,
+#                                              image,
+#                                              is_display_tracker,
+#                                              tracker,
+#                                              )
+#                 else:
+#                     vid_cap.release()
+#                     break
+#         except Exception as e:
+#             st.sidebar.error("Error loading video: " + str(e))
+
 
 def play_rtsp_stream(conf, model):
     """
@@ -121,7 +152,8 @@ def play_rtsp_stream(conf, model):
         None
     """
     source_rtsp = st.sidebar.text_input("rtsp stream url:")
-    st.sidebar.caption('Example URL: rtsp://admin:12345@192.168.1.210:554/Streaming/Channels/101')
+    st.sidebar.caption(
+        'Example URL: rtsp://admin:12345@192.168.1.210:554/Streaming/Channels/101')
     is_display_tracker, tracker = display_tracker_options()
     if st.sidebar.button('Detect Objects'):
         try:
