@@ -150,9 +150,6 @@ def play_rtsp_stream(conf, model):
                                              )
                 else:
                     vid_cap.release()
-                    # vid_cap = cv2.VideoCapture(source_rtsp)
-                    # time.sleep(0.1)
-                    # continue
                     break
         except Exception as e:
             vid_cap.release()
