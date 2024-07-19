@@ -76,7 +76,7 @@ tqdm==4.66.4
 triton==2.3.1
 typing_extensions==4.12.2
 tzdata==2024.1
-ultralytics==8.2.59
+ultralytics==8.2.60
 ultralytics-thop==2.0.0
 urllib3==2.2.2
 watchdog==4.0.1
