@@ -18,6 +18,8 @@ Jinja2==3.1.4
 jsonschema==4.23.0
 jsonschema-specifications==2023.12.1
 kiwisolver==1.4.5
+lap==0.4.0
+lapx==0.5.9.post1
 markdown-it-py==3.0.0
 MarkupSafe==2.1.5
 matplotlib==3.9.1
@@ -40,6 +42,7 @@ nvidia-nvjitlink-cu12==12.5.82
 nvidia-nvtx-cu12==12.1.105
 opencv-python==4.10.0.84
 packaging==24.1
+pafy==0.5.5
 pandas==2.2.2
 pillow==10.4.0
 protobuf==5.27.2
@@ -78,4 +81,4 @@ ultralytics-thop==2.0.0
 urllib3==2.2.2
 watchdog==4.0.1
 websockets==12.0
-yt-dlp==2024.7.16.232919.dev0
+yt-dlp==2024.7.16
