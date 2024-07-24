@@ -14,6 +14,9 @@ Thank you team [Streamlit](<https://github.com/streamlit/streamlit>) for the com
 This app is up and running on Streamlit cloud server!!! You can check the demo of this web application on this link 
 [yolov8-streamlit-detection-tracking-webapp](https://yolov8-object-detection-and-tracking-app.streamlit.app/)
 
+**Note**: In the demo, Due to non-availability of GPUs, you may encounter slow video inferencing.
+
+
 ## <span style="color:deepskyblue"> Tracking With Object Detection Demo</span>
 
 <https://user-images.githubusercontent.com/104087274/234874398-75248e8c-6965-4c91-9176-622509f0ad86.mov>
