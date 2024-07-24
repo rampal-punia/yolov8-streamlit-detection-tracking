@@ -12,7 +12,7 @@ For a deeper dive into the implementation, check out my three-part blog series o
 Thank you team [Streamlit](<https://github.com/streamlit/streamlit>) for the community support for the cloud upload. 
 
 This app is up and running on Streamlit cloud server!!! You can check the demo of this web application on this link 
-[yolov8-streamlit-detection-tracking-webapp](https://codingmantras-yolov8-streamlit-detection-tracking-app-njcqjg.streamlit.app/)
+[yolov8-streamlit-detection-tracking-webapp](https://yolov8-object-detection-and-tracking-app.streamlit.app/)
 
 ## <span style="color:deepskyblue"> Tracking With Object Detection Demo</span>
 
