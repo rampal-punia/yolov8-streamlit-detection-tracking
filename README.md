@@ -127,6 +127,15 @@ This app uses [YOLOv8](<https://github.com/ultralytics/ultralytics>) for object 
 
 ### Disclaimer
 
-Please note this project is intended for educational purposes only and should not be used in production environments.
+This project is intended as a learning exercise and demonstration of integrating various technologies, including:
+
+- Streamlit
+- YoloV8
+- Object-Detection on Images And Live Video Streams
+- Python-OpenCV
+
+Please note that this application is not designed or tested for production use. It serves as an educational resource and a showcase of technology integration rather than a production-ready web application.
+
+Contributors and users are welcome to explore, learn from, and build upon this project for educational purposes.
 
 **Hit star ⭐ if you like this repo!!!**
