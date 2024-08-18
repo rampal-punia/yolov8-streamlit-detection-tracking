@@ -138,4 +138,4 @@ Please note that this application is not designed or tested for production use. 
 
 Contributors and users are welcome to explore, learn from, and build upon this project for educational purposes.
 
-**Hit star ⭐ if you like this repo!!!**
+### Hit star ⭐ if you like this repo!!!
